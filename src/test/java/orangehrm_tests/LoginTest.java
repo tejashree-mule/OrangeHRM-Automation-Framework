@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 
+import orangehrm_pages.LoginPage;
+
 public class LoginTest {
 
 	WebDriver driver;
@@ -17,12 +19,14 @@ public class LoginTest {
 		}
 	
 	@Test
-	public void testTitle()
+	public void testValidLogin() throws InterruptedException 
 	{
-		String expectedTitle= "OrangeHRM";
-		String actualTitle= driver.getTitle();
-		assert actualTitle.contains(expectedTitle);
-		
+		LoginPage login=new LoginPage(driver);
+		login.login("Admin","admin123");
+		Thread.sleep(2000);
+		String currentURL= driver.getCurrentUrl(); 
+		assert currentURL.contains("dashboard");
+		System.out.println("passed");
 	}
 	
 	@AfterMethod
